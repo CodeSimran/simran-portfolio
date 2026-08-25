@@ -1,0 +1,545 @@
+/* =============================================
+   INTRO — High-Visibility Typing Hands Background
+   ============================================= */
+
+.intro-section-wrap {
+  position: relative;
+  overflow: hidden;
+  padding: 120px var(--section-px) 100px;
+  background: #050508;
+  min-height: 640px;
+}
+
+/* =============================================
+   BACKGROUND CONTAINER
+   ============================================= */
+.laptop-typing-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: 0;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.typing-video {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  transform: translate(-50%, -50%) scale(1.1);
+  object-fit: cover;
+  opacity: 0.65;
+  filter: contrast(125%) brightness(85%) saturate(110%);
+}
+
+/* =============================================
+   3D LAPTOP & ANIMATED TYPING HANDS OVERLAY
+   ============================================= */
+.hands-typing-visual-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -42%) scale(1.05);
+  width: 780px;
+  height: 480px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.85;
+  filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.9));
+  z-index: 1;
+}
+
+.laptop-chassis {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  perspective: 900px;
+}
+
+/* Glowing Laptop Screen in Background */
+.laptop-screen-glow {
+  width: 520px;
+  height: 240px;
+  background: linear-gradient(180deg, #100f1c 0%, #080710 100%);
+  border: 4px solid #302d44;
+  border-bottom: none;
+  border-radius: 12px 12px 0 0;
+  box-shadow:
+    0 0 50px rgba(124, 108, 250, 0.25),
+    inset 0 0 30px rgba(124, 108, 250, 0.15);
+  padding: 16px 20px;
+  transform: rotateX(12deg);
+  transform-origin: bottom center;
+  overflow: hidden;
+  opacity: 0.7;
+}
+
+.code-editor-mock {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 1.7;
+  color: #c4b5fd;
+  opacity: 0.8;
+}
+
+.code-token.blue { color: #60a5fa; font-weight: bold; }
+.code-token.yellow { color: #fde047; }
+.code-token.green { color: #4ade80; }
+.code-token.purple { color: #c084fc; }
+.code-token.orange { color: #fb923c; }
+.code-indent { padding-left: 20px; }
+.code-indent-2 { padding-left: 36px; }
+
+/* 3D Keyboard Base */
+.laptop-base-keyboard {
+  position: relative;
+  width: 620px;
+  height: 220px;
+  background: linear-gradient(180deg, #1a1829 0%, #0c0b14 100%);
+  border: 3px solid #2d2942;
+  border-radius: 0 0 24px 24px;
+  box-shadow:
+    0 30px 70px rgba(0, 0, 0, 0.95),
+    0 0 30px rgba(124, 108, 250, 0.2);
+  transform: rotateX(55deg);
+  transform-origin: top center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: visible;
+}
+
+.keyboard-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 4px;
+  width: 85%;
+  height: 65%;
+  background: #11101c;
+  padding: 8px;
+  border-radius: 8px;
+  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.8);
+}
+
+.key-cap {
+  background: #1e1b2e;
+  border-radius: 3px;
+  border-bottom: 2px solid #0d0c14;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+  animation: key-press 2.5s ease-in-out infinite;
+}
+
+.key-cap.k1 { animation-delay: 0.1s; }
+.key-cap.k2 { animation-delay: 0.4s; }
+.key-cap.k3 { animation-delay: 0.8s; }
+.key-cap.k4 { animation-delay: 1.2s; }
+.key-cap.k5 { animation-delay: 1.6s; }
+
+@keyframes key-press {
+  0%, 100% {
+    background: #1e1b2e;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+  }
+  50% {
+    background: #4c3f78;
+    box-shadow: 0 0 8px #a78bfa;
+  }
+}
+
+/* =============================================
+   ANIMATED REALISTIC HUMAN HANDS ON KEYBOARD
+   ============================================= */
+.hand-left-typing,
+.hand-right-typing {
+  position: absolute;
+  width: 175px;
+  height: 235px;
+  z-index: 10;
+  pointer-events: none;
+  filter: drop-shadow(0 20px 30px rgba(0, 0, 0, 0.95));
+}
+
+.human-hand-svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.hand-left-typing {
+  left: 90px;
+  bottom: -35px;
+  animation: hand-left-natural 2.4s ease-in-out infinite alternate;
+}
+
+.hand-right-typing {
+  right: 90px;
+  bottom: -35px;
+  animation: hand-right-natural 2.2s ease-in-out infinite alternate;
+}
+
+@keyframes hand-left-natural {
+  0% {
+    transform: translateY(0px) rotate(-4deg);
+  }
+  35% {
+    transform: translateY(-4px) rotate(-3deg);
+  }
+  70% {
+    transform: translateY(2.5px) rotate(-5deg);
+  }
+  100% {
+    transform: translateY(-1px) rotate(-4deg);
+  }
+}
+
+@keyframes hand-right-natural {
+  0% {
+    transform: translateY(-2px) rotate(4deg);
+  }
+  40% {
+    transform: translateY(3.5px) rotate(5.5deg);
+  }
+  75% {
+    transform: translateY(-3.5px) rotate(3deg);
+  }
+  100% {
+    transform: translateY(1px) rotate(4deg);
+  }
+}
+
+/* Individual Finger Articulation & Natural Keystrokes */
+.f-thumb-left {
+  transform-origin: 110px 115px;
+  animation: thumb-tap-left 1.35s ease-in-out infinite alternate;
+}
+
+.f-thumb-right {
+  transform-origin: 60px 115px;
+  animation: thumb-tap-right 1.45s ease-in-out infinite alternate;
+}
+
+.f-index-left {
+  transform-origin: 108px 88px;
+  animation: finger-tap-natural 0.52s ease-in-out infinite alternate;
+}
+
+.f-middle-left {
+  transform-origin: 84px 84px;
+  animation: finger-tap-natural 0.68s ease-in-out 0.15s infinite alternate;
+}
+
+.f-ring-left {
+  transform-origin: 60px 86px;
+  animation: finger-tap-natural 0.74s ease-in-out 0.3s infinite alternate;
+}
+
+.f-pinky-left {
+  transform-origin: 36px 94px;
+  animation: finger-tap-natural 0.92s ease-in-out 0.2s infinite alternate;
+}
+
+.f-index-right {
+  transform-origin: 62px 88px;
+  animation: finger-tap-natural 0.58s ease-in-out 0.1s infinite alternate;
+}
+
+.f-middle-right {
+  transform-origin: 86px 84px;
+  animation: finger-tap-natural 0.64s ease-in-out 0.25s infinite alternate;
+}
+
+.f-ring-right {
+  transform-origin: 110px 86px;
+  animation: finger-tap-natural 0.72s ease-in-out 0.05s infinite alternate;
+}
+
+.f-pinky-right {
+  transform-origin: 134px 94px;
+  animation: finger-tap-natural 0.88s ease-in-out 0.35s infinite alternate;
+}
+
+@keyframes finger-tap-natural {
+  0% {
+    transform: translateY(0px) scale(1) rotate(0deg);
+  }
+  45% {
+    transform: translateY(-6px) scaleY(0.97) rotate(-0.8deg);
+  }
+  100% {
+    transform: translateY(4px) scaleY(1.02) rotate(1deg);
+  }
+}
+
+@keyframes thumb-tap-left {
+  0% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-4.5px) rotate(-3deg);
+  }
+  100% {
+    transform: translateY(3px) rotate(2.5deg);
+  }
+}
+
+@keyframes thumb-tap-right {
+  0% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-4.5px) rotate(3deg);
+  }
+  100% {
+    transform: translateY(3px) rotate(-2.5deg);
+  }
+}
+
+/* =============================================
+   DARK VIGNETTE TO KEEP TEXT LEGIBLE
+   ============================================= */
+.typing-vignette-overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 70% 70% at 50% 50%, rgba(5, 5, 8, 0.15) 0%, rgba(5, 5, 8, 0.88) 80%, #050508 100%),
+    linear-gradient(180deg, #050508 0%, transparent 15%, transparent 85%, #050508 100%),
+    linear-gradient(90deg, #050508 0%, transparent 10%, transparent 90%, #050508 100%);
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* =============================================
+   INTRO CONTENT (FLOATING CRISPLY ON TOP)
+   ============================================= */
+.intro-layout {
+  position: relative;
+  z-index: 3;
+  display: grid;
+  grid-template-columns: 1fr 1.6fr;
+  gap: 80px;
+  align-items: flex-start;
+}
+
+.intro-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  color: var(--green);
+  background: rgba(74, 222, 128, 0.12);
+  border: 1px solid rgba(74, 222, 128, 0.35);
+  border-radius: 20px;
+  padding: 5px 15px;
+  margin-bottom: 20px;
+  letter-spacing: 0.12em;
+  box-shadow: 0 0 15px rgba(74, 222, 128, 0.2);
+}
+
+.live-typing-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 8px var(--green);
+  animation: typing-blink 1.4s ease-in-out infinite;
+}
+
+@keyframes typing-blink {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.3; transform: scale(0.7); }
+}
+
+.intro-tabs {
+  list-style: none;
+  margin-top: 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.intro-tab {
+  font-size: 15px;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 8px 0 8px 24px;
+  position: relative;
+  transition: color 0.25s;
+}
+
+.intro-tab::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 16px;
+  height: 1px;
+  background: var(--text-muted);
+  transition: background 0.25s, width 0.25s;
+}
+
+.intro-tab.active {
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+.intro-tab.active::before {
+  background: var(--text-primary);
+  width: 22px;
+}
+
+.intro-tab:hover:not(.active) {
+  color: var(--text-secondary);
+}
+
+/* =============================================
+   FROSTED GLASS INTRO CARD
+   ============================================= */
+.intro-card {
+  background: rgba(14, 13, 24, 0.65);
+  border-radius: 20px;
+  padding: 48px 52px;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background-image: radial-gradient(circle, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-size: 24px 24px;
+  min-height: 280px;
+  display: flex;
+  align-items: center;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow:
+    0 25px 70px rgba(0, 0, 0, 0.8),
+    0 0 40px rgba(124, 108, 250, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.intro-card:hover {
+  border-color: rgba(255, 255, 255, 0.3);
+  box-shadow:
+    0 35px 90px rgba(0, 0, 0, 0.9),
+    0 0 50px rgba(124, 108, 250, 0.25);
+}
+
+.card-ambient-glow {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 140px;
+  height: 140px;
+  background: radial-gradient(circle, rgba(124, 108, 250, 0.25) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.card-fold {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 0 40px 40px 0;
+  border-color: transparent rgba(5, 5, 8, 0.85) transparent transparent;
+  opacity: 0.8;
+}
+
+.intro-text {
+  position: relative;
+  z-index: 2;
+  font-family: var(--font-mono);
+  font-size: clamp(16px, 2.2vw, 22px);
+  color: #ffffff;
+  line-height: 1.75;
+  letter-spacing: -0.01em;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
+}
+
+/* =============================================
+   DRAWN BY BLUEPRINT BLOCK
+   ============================================= */
+.drawn-block {
+  max-width: 1200px;
+  margin: 60px auto 0;
+  display: flex;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 12px;
+  overflow: hidden;
+  background: rgba(14, 13, 24, 0.65);
+  backdrop-filter: blur(16px);
+  position: relative;
+  z-index: 3;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+}
+
+.drawn-item {
+  flex: 1;
+  padding: 20px 28px;
+  border-right: 1px solid rgba(255, 255, 255, 0.12);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.drawn-item:last-child {
+  border-right: none;
+}
+
+.drawn-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+.drawn-value {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+/* =============================================
+   RESPONSIVE
+   ============================================= */
+@media (max-width: 1024px) {
+  .intro-layout {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+  .hands-typing-visual-overlay {
+    transform: translate(-50%, -45%) scale(0.85);
+  }
+}
+
+@media (max-width: 768px) {
+  .drawn-block {
+    flex-direction: column;
+  }
+  .drawn-item {
+    border-right: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  .drawn-item:last-child {
+    border-bottom: none;
+  }
+  .intro-card {
+    padding: 32px 28px;
+  }
+  .hands-typing-visual-overlay {
+    transform: translate(-50%, -45%) scale(0.65);
+  }
+}

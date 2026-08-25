@@ -1,0 +1,526 @@
+﻿/* =============================================
+   SKILLS — 3D Living Organic Skill Tree
+   ============================================= */
+
+.skills-section {
+  background: #05040a;
+  position: relative;
+  overflow: hidden;
+  padding-top: 120px;
+  padding-bottom: 140px;
+  scroll-margin-top: 50px;
+}
+
+.skills-tree-header-row {
+  margin-bottom: 30px;
+}
+
+.skills-tree-desc {
+  font-family: var(--font-mono);
+  font-size: 13.5px;
+  color: var(--text-secondary);
+  max-width: 800px;
+  line-height: 1.8;
+  margin-top: 8px;
+  margin-bottom: 24px;
+}
+
+.skills-tree-desc strong {
+  color: var(--text-primary);
+}
+
+/* Action Bar */
+.tree-action-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.filter-pill-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.tree-btn {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-secondary);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border-light);
+  border-radius: 20px;
+  padding: 8px 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.25s ease;
+}
+
+.tree-btn:hover {
+  color: var(--text-primary);
+  border-color: rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.tree-btn.active {
+  color: #fff;
+  background: rgba(124, 108, 250, 0.18);
+  border-color: var(--accent);
+  box-shadow: 0 0 16px rgba(124, 108, 250, 0.25);
+}
+
+.dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+}
+.tech-dot { background: #34d399; box-shadow: 0 0 8px #34d399; }
+.soft-dot { background: #fbbf24; box-shadow: 0 0 8px #fbbf24; }
+
+.tree-manipulation-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.tree-action-btn {
+  font-family: var(--font-sans);
+  font-size: 12.5px;
+  font-weight: 600;
+  padding: 8px 18px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.shake-btn {
+  background: linear-gradient(135deg, rgba(251, 191, 36, 0.15), rgba(245, 158, 11, 0.25));
+  border: 1px solid rgba(251, 191, 36, 0.4);
+  color: #fef08a;
+}
+.shake-btn:hover {
+  background: linear-gradient(135deg, rgba(251, 191, 36, 0.25), rgba(245, 158, 11, 0.4));
+  transform: scale(1.04) rotate(-1deg);
+  box-shadow: 0 0 20px rgba(251, 191, 36, 0.3);
+}
+
+.regrow-btn {
+  background: linear-gradient(135deg, rgba(52, 211, 153, 0.15), rgba(16, 185, 129, 0.25));
+  border: 1px solid rgba(52, 211, 153, 0.4);
+  color: #a7f3d0;
+}
+.regrow-btn:hover {
+  background: linear-gradient(135deg, rgba(52, 211, 153, 0.25), rgba(16, 185, 129, 0.4));
+  transform: scale(1.04);
+  box-shadow: 0 0 20px rgba(52, 211, 153, 0.3);
+}
+
+/* =============================================
+   3D TREE STAGE CANVAS
+   ============================================= */
+.tree-canvas-stage {
+  position: relative;
+  width: 100%;
+  height: 720px;
+  background: radial-gradient(ellipse 80% 60% at 50% 50%, #0d0c18 0%, #05040a 100%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 32px;
+  overflow: hidden;
+  box-shadow:
+    0 30px 90px rgba(0, 0, 0, 0.9),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  margin-top: 16px;
+}
+
+/* Sunlight Ray */
+.tree-sunlight-rays {
+  position: absolute;
+  top: -100px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(251, 191, 36, 0.06) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+.forest-spore {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: #fff;
+  opacity: 0.4;
+  animation: spore-drift 12s ease-in-out infinite;
+}
+.forest-spore.s1 { top: 20%; left: 20%; background: #34d399; box-shadow: 0 0 10px #34d399; }
+.forest-spore.s2 { top: 35%; right: 25%; background: #fbbf24; box-shadow: 0 0 10px #fbbf24; animation-delay: -3s; }
+.forest-spore.s3 { top: 60%; left: 35%; background: #a78bfa; box-shadow: 0 0 10px #a78bfa; animation-delay: -6s; }
+.forest-spore.s4 { top: 15%; right: 40%; background: #38bdf8; box-shadow: 0 0 10px #38bdf8; animation-delay: -9s; }
+
+@keyframes spore-drift {
+  0%, 100% { transform: translateY(0) translateX(0); opacity: 0.2; }
+  50% { transform: translateY(-40px) translateX(20px); opacity: 0.8; }
+}
+
+/* =============================================
+   ORGANIC TREE SVG
+   ============================================= */
+.organic-tree-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+  filter: drop-shadow(0 15px 35px rgba(0, 0, 0, 0.9));
+}
+
+/* =============================================
+   LIVING LEAVES FOLIAGE LAYER
+   ============================================= */
+.tree-foliage-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+}
+
+.leaf-node {
+  position: absolute;
+  cursor: pointer;
+  z-index: 4;
+  transform: translate(-50%, -50%) rotate(var(--leaf-rot, 0deg)) scale(var(--leaf-scale, 1));
+  animation: leaf-flutter 4s ease-in-out infinite alternate;
+  transform-origin: 0% 50%;
+  transition: opacity 0.3s, filter 0.3s;
+}
+
+.leaf-node.filtered-dim {
+  opacity: 0.15;
+  filter: grayscale(80%);
+  pointer-events: none;
+}
+
+@keyframes leaf-flutter {
+  0% {
+    transform: translate(-50%, -50%) rotate(calc(var(--leaf-rot, 0deg) - 4deg)) scale(var(--leaf-scale, 1));
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(calc(var(--leaf-rot, 0deg) + 4deg)) scale(var(--leaf-scale, 1));
+  }
+}
+
+.leaf-stem {
+  position: absolute;
+  left: -6px;
+  top: 50%;
+  width: 8px;
+  height: 2px;
+  background: #3e2e25;
+  transform: translateY(-50%);
+}
+
+/* Organic Leaf Blade */
+.leaf-blade {
+  position: relative;
+  min-width: 100px;
+  padding: 6px 14px;
+  border-radius: 0px 22px 0px 22px; /* Authentic Leaf contour */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(8px);
+  transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+  box-shadow:
+    0 6px 18px rgba(0, 0, 0, 0.6),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+/* Technical Leaf (Green / Turquoise emerald gradient) */
+.tech-blade {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.88) 0%, rgba(5, 150, 105, 0.95) 100%);
+  border: 1.2px solid rgba(167, 243, 208, 0.5);
+}
+
+/* Soft Skills / Mentorship Flower Leaf (Gold / Violet amber gradient) */
+.soft-blade {
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.92) 0%, rgba(217, 119, 6, 0.96) 100%);
+  border: 1.2px solid rgba(254, 240, 138, 0.6);
+  border-radius: 22px 0px 22px 0px;
+}
+
+.leaf-node:hover .leaf-blade {
+  transform: scale(1.15) translateY(-4px);
+  box-shadow:
+    0 12px 30px rgba(0, 0, 0, 0.8),
+    0 0 25px rgba(52, 211, 153, 0.5);
+  border-color: #ffffff;
+}
+
+.leaf-node.soft-leaf:hover .leaf-blade {
+  box-shadow:
+    0 12px 30px rgba(0, 0, 0, 0.8),
+    0 0 25px rgba(251, 191, 36, 0.6);
+}
+
+.leaf-midrib {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.25);
+  pointer-events: none;
+}
+
+.leaf-caption {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+}
+
+.leaf-name {
+  font-family: var(--font-sans);
+  font-size: 11.5px;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: 0.02em;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+  white-space: nowrap;
+}
+
+/* =============================================
+   FALLING LEAF ANIMATION (Physics Tumble)
+   ============================================= */
+.leaf-node.falling-leaf {
+  animation: leaf-tumble-fall 2.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards !important;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.leaf-node.falling-leaf .leaf-blade {
+  /* Turn dry golden autumn / brown while falling */
+  background: linear-gradient(135deg, #d97706 0%, #78350f 100%) !important;
+  border-color: #f59e0b !important;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.7), 0 0 15px rgba(217, 119, 6, 0.4) !important;
+  transition: background 0.8s, border-color 0.8s;
+}
+
+@keyframes leaf-tumble-fall {
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg) scale(1);
+    opacity: 1;
+  }
+  25% {
+    transform: translate(calc(-50% + 40px), calc(-50% + 120px)) rotate(90deg) scale(0.95);
+  }
+  50% {
+    transform: translate(calc(-50% - 50px), calc(-50% + 280px)) rotate(220deg) scale(0.9);
+  }
+  75% {
+    transform: translate(calc(-50% + 35px), calc(-50% + 440px)) rotate(310deg) scale(0.85);
+  }
+  100% {
+    transform: translate(calc(-50% - 15px), calc(-50% + 600px)) rotate(380deg) scale(0.8);
+    opacity: 0;
+  }
+}
+
+/* =============================================
+   FALLEN LEAVES GROUND PILE
+   ============================================= */
+.fallen-leaves-ground {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 75px;
+  z-index: 2;
+}
+
+.mossy-soil-bed {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 35px;
+  background: linear-gradient(180deg, rgba(20, 30, 20, 0.8) 0%, #0d0a08 100%);
+  border-top: 1.5px solid rgba(74, 222, 128, 0.2);
+  box-shadow: 0 -10px 25px rgba(0, 0, 0, 0.8);
+}
+
+.dry-fallen-leaf {
+  position: absolute;
+  bottom: 12px;
+  z-index: 3;
+  cursor: default;
+  transition: transform 0.3s;
+}
+
+.dry-fallen-leaf:hover {
+  transform: scale(1.15) translateY(-3px) !important;
+}
+
+.dry-leaf-shape {
+  background: linear-gradient(135deg, #b45309 0%, #713f12 100%);
+  border: 1px solid #d97706;
+  border-radius: 0 14px 0 14px;
+  padding: 3px 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.8);
+}
+
+.dry-leaf-shape span {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  font-weight: 600;
+  color: #fef3c7;
+  white-space: nowrap;
+}
+
+/* =============================================
+   HOVER LEAF 3D TOOLTIP CARD
+   ============================================= */
+.leaf-detail-card {
+  position: absolute;
+  z-index: 20;
+  background: rgba(18, 16, 28, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 16px;
+  padding: 16px 20px;
+  min-width: 240px;
+  max-width: 300px;
+  backdrop-filter: blur(20px);
+  box-shadow:
+    0 20px 50px rgba(0, 0, 0, 0.9),
+    0 0 30px rgba(124, 108, 250, 0.25);
+  animation: cardPop 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+  pointer-events: none;
+}
+
+@keyframes cardPop {
+  from { opacity: 0; transform: scale(0.9) translateY(6px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.card-top-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+
+.leaf-type-badge {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 2px 8px;
+  border-radius: 10px;
+}
+.leaf-type-badge.tech {
+  background: rgba(52, 211, 153, 0.15);
+  color: #34d399;
+  border: 1px solid rgba(52, 211, 153, 0.3);
+}
+.leaf-type-badge.soft {
+  background: rgba(251, 191, 36, 0.15);
+  color: #fbbf24;
+  border: 1px solid rgba(251, 191, 36, 0.3);
+}
+
+.leaf-level-text {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-muted);
+}
+
+.leaf-card-title {
+  font-family: var(--font-sans);
+  font-size: 18px;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 4px;
+}
+
+.leaf-card-desc {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  margin-bottom: 8px;
+}
+
+.leaf-card-hint {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: #f59e0b;
+  border-top: 1px dashed rgba(255, 255, 255, 0.1);
+  padding-top: 6px;
+}
+
+/* =============================================
+   TREE LEGEND STRIP
+   ============================================= */
+.tree-legend-strip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 32px;
+  margin-top: 24px;
+  flex-wrap: wrap;
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  color: var(--text-muted);
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.legend-swatch {
+  width: 12px;
+  height: 12px;
+  border-radius: 0 6px 0 6px;
+}
+.tech-swatch { background: #10b981; border: 1px solid #6ee7b7; box-shadow: 0 0 6px #10b981; }
+.soft-swatch { background: #f59e0b; border: 1px solid #fde047; box-shadow: 0 0 6px #f59e0b; }
+.dry-swatch { background: #b45309; border: 1px solid #d97706; }
+
+/* =============================================
+   RESPONSIVENESS
+   ============================================= */
+@media (max-width: 900px) {
+  .tree-canvas-stage {
+    height: 600px;
+  }
+  .leaf-blade {
+    min-width: 75px;
+    padding: 4px 8px;
+  }
+  .leaf-name {
+    font-size: 10px;
+  }
+}
+
+@media (max-width: 600px) {
+  .tree-canvas-stage {
+    height: 520px;
+  }
+  .tree-action-bar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .leaf-blade {
+    min-width: 60px;
+    padding: 3px 6px;
+  }
+  .leaf-name {
+    font-size: 9px;
+  }
+}

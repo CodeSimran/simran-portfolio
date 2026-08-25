@@ -1,0 +1,426 @@
+#hero {
+  min-height: 100vh;
+  display: flex; align-items: center; justify-content: center;
+  padding: var(--nav-h) var(--section-px) 0;
+  text-align: center; position: relative;
+  overflow: hidden;
+  user-select: none;
+}
+#hero::before {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(ellipse 80% 60% at 50% 40%, rgba(124,108,250,0.12) 0%, transparent 70%);
+  pointer-events: none;
+}
+.hero-content { 
+  position: relative; 
+  z-index: 5; 
+  max-width: 950px; 
+  padding-bottom: 80px; 
+  pointer-events: auto;
+}
+
+.hero-badge-interactive {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  background: rgba(124, 108, 250, 0.08);
+  border: 1px solid rgba(124, 108, 250, 0.25);
+  border-radius: 30px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: var(--accent-2);
+  margin-bottom: 24px;
+  backdrop-filter: blur(8px);
+  animation: badgeGlow 3s ease-in-out infinite alternate;
+}
+.hero-badge-dot {
+  width: 7px;
+  height: 7px;
+  background: var(--accent);
+  border-radius: 50%;
+  box-shadow: 0 0 8px var(--accent);
+  animation: pulseDot 1.5s infinite;
+}
+
+@keyframes pulseDot {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.4); opacity: 0.6; }
+}
+
+@keyframes badgeGlow {
+  0% { box-shadow: 0 0 10px rgba(124, 108, 250, 0.1); }
+  100% { box-shadow: 0 0 20px rgba(124, 108, 250, 0.25); }
+}
+
+.hero-title {
+  font-size: clamp(56px, 11vw, 130px); 
+  font-weight: 700;
+  line-height: 0.95; 
+  letter-spacing: -0.04em; 
+  margin-bottom: 32px;
+  cursor: default;
+}
+
+.title-word {
+  display: inline-block;
+  transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), text-shadow 0.3s;
+}
+.title-word:hover {
+  transform: translateY(-2px);
+  text-shadow: 0 0 30px rgba(167, 139, 250, 0.4);
+}
+.title-accent {
+  background: linear-gradient(135deg, #ffffff 40%, rgba(255, 255, 255, 0.7) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.hero-subtitle {
+  font-family: var(--font-mono); font-size: clamp(12px,1.4vw,15px);
+  color: var(--text-secondary); line-height: 1.9;
+  letter-spacing: 0.02em; margin-bottom: 48px;
+  pointer-events: auto;
+}
+.hero-cta-group {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 36px;
+  position: relative;
+  z-index: 20;
+  flex-wrap: wrap;
+}
+
+.hero-cta-btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 120px; height: 120px; border-radius: 50%;
+  background: var(--text-primary); color: var(--bg);
+  text-decoration: none; font-size: 14px; font-weight: 600;
+  text-align: center; line-height: 1.3;
+  transition: transform 0.3s cubic-bezier(0.4,0,0.2,1), background 0.3s, box-shadow 0.3s;
+  box-shadow: 0 10px 30px rgba(255,255,255,0.15);
+  pointer-events: auto;
+  flex-shrink: 0;
+}
+.hero-cta-btn:hover { 
+  transform: scale(1.08); 
+  background: var(--accent-2); 
+  color: #fff; 
+  box-shadow: 0 15px 40px rgba(167, 139, 250, 0.4);
+}
+
+/* =============================================
+   3D HOLOGRAPHIC CV INTERACTIVE CARD
+   ============================================= */
+.cv-3d-card-wrapper {
+  position: relative;
+  display: block;
+  text-decoration: none;
+  cursor: pointer;
+  perspective: 900px;
+  transform-style: preserve-3d;
+  user-select: none;
+  animation: cv-idle-float 6s ease-in-out infinite alternate;
+}
+
+@keyframes cv-idle-float {
+  0% {
+    transform: perspective(800px) rotateX(0deg) rotateY(0deg) translateY(0px);
+  }
+  50% {
+    transform: perspective(800px) rotateX(3deg) rotateY(-4deg) translateY(-6px);
+  }
+  100% {
+    transform: perspective(800px) rotateX(-2deg) rotateY(3deg) translateY(2px);
+  }
+}
+
+.cv-3d-card {
+  position: relative;
+  width: 290px;
+  min-height: 135px;
+  border-radius: 20px;
+  padding: 16px 18px;
+  background: linear-gradient(135deg, rgba(22, 20, 36, 0.85) 0%, rgba(12, 11, 20, 0.92) 100%);
+  border: 1.5px solid rgba(167, 139, 250, 0.35);
+  box-shadow:
+    0 20px 45px rgba(0, 0, 0, 0.8),
+    0 0 35px rgba(124, 108, 250, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.25),
+    inset 0 0 20px rgba(124, 108, 250, 0.1);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  transform-style: preserve-3d;
+  overflow: hidden;
+  transition: border-color 0.3s, box-shadow 0.3s;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-align: left;
+}
+
+.cv-3d-card-wrapper:hover .cv-3d-card {
+  border-color: rgba(196, 181, 253, 0.65);
+  box-shadow:
+    0 30px 60px rgba(0, 0, 0, 0.9),
+    0 0 50px rgba(167, 139, 250, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+/* Dynamic Holographic Glare */
+.cv-3d-glare {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  mix-blend-mode: screen;
+  z-index: 10;
+  transition: opacity 0.25s ease-out;
+  border-radius: 20px;
+}
+
+/* 3D Depth Layer 1: Background Plate Pattern */
+.cv-3d-bg-layer {
+  position: absolute;
+  inset: 0;
+  transform: translateZ(0px);
+  pointer-events: none;
+}
+
+.cv-grid-pattern {
+  position: absolute;
+  inset: 0;
+  background-image: 
+    linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+  background-size: 16px 16px;
+  opacity: 0.6;
+}
+
+.cv-ambient-blob {
+  position: absolute;
+  top: -20px;
+  right: -20px;
+  width: 110px;
+  height: 110px;
+  background: radial-gradient(circle, rgba(124, 108, 250, 0.35) 0%, transparent 70%);
+  filter: blur(12px);
+}
+
+/* 3D Depth Layer 2: Middle Content */
+.cv-3d-mid-layer {
+  position: relative;
+  z-index: 2;
+  transform: translateZ(20px);
+  transform-style: preserve-3d;
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+}
+
+/* 3D Paper Sheet Graphic */
+.cv-doc-icon-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.cv-3d-sheet {
+  position: relative;
+  width: 36px;
+  height: 46px;
+  background: linear-gradient(135deg, #ffffff 0%, #d8d3f8 100%);
+  border-radius: 5px;
+  box-shadow:
+    0 6px 16px rgba(0, 0, 0, 0.6),
+    0 0 10px rgba(124, 108, 250, 0.3);
+  transform: rotate(-3deg);
+  overflow: hidden;
+  padding: 6px 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.sheet-fold {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 0 10px 10px 0;
+  border-color: transparent #8b7ef8 transparent transparent;
+  box-shadow: -1px 1px 2px rgba(0,0,0,0.25);
+}
+
+.sheet-lines {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.s-line {
+  height: 2.5px;
+  border-radius: 2px;
+  background: #6352c7;
+}
+
+.s-line.l1 { width: 75%; }
+.s-line.l2 { width: 90%; background: #7c6cfa; }
+.s-line.l3 { width: 60%; background: #9a8ffc; }
+
+.cv-format-tag {
+  font-family: var(--font-mono);
+  font-size: 8.5px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: #c4b5fd;
+  background: rgba(124, 108, 250, 0.18);
+  border: 1px solid rgba(124, 108, 250, 0.4);
+  border-radius: 6px;
+  padding: 1px 5px;
+}
+
+.cv-meta-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.cv-badge-live {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  color: var(--green);
+  margin-bottom: 2px;
+}
+
+.cv-pulse-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 6px var(--green);
+  animation: typing-blink 1.2s infinite;
+}
+
+.cv-author-name {
+  font-size: 15px;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+}
+
+.cv-author-role {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  color: var(--text-muted);
+  line-height: 1.3;
+}
+
+/* 3D Depth Layer 3: Foreground Dual Action Buttons */
+.cv-3d-front-layer {
+  position: relative;
+  z-index: 3;
+  transform: translateZ(30px);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.cv-btn-action {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-family: var(--font-sans);
+  font-size: 11.5px;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 12px;
+  cursor: pointer;
+  text-decoration: none;
+  border: 1px solid transparent;
+  transition: transform 0.2s, background 0.2s, box-shadow 0.2s, border-color 0.2s, color 0.2s;
+  user-select: none;
+}
+
+/* View / Preview Button */
+.cv-btn-view {
+  background: rgba(124, 108, 250, 0.15);
+  border-color: rgba(167, 139, 250, 0.35);
+  color: #c4b5fd;
+}
+
+.cv-btn-view:hover {
+  background: rgba(124, 108, 250, 0.3);
+  border-color: rgba(196, 181, 253, 0.7);
+  color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(124, 108, 250, 0.35);
+}
+
+/* Download Button */
+.cv-btn-download {
+  background: linear-gradient(135deg, #7c6cfa 0%, #6050e0 100%);
+  color: #ffffff;
+  box-shadow:
+    0 4px 14px rgba(124, 108, 250, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.cv-btn-download:hover:not(.downloading) {
+  background: linear-gradient(135deg, #9082fc 0%, #7060f0 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(124, 108, 250, 0.6);
+}
+
+.cv-btn-download.downloading {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  box-shadow: 0 0 15px rgba(16, 185, 129, 0.5);
+  animation: downloadPulse 1s ease-in-out infinite;
+  cursor: wait;
+}
+
+@keyframes downloadPulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.85; transform: scale(0.98); }
+}
+
+.hero-scroll-indicator {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+.scroll-label { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.2em; color: var(--text-muted); }
+.scroll-line {
+  width: 1px; height: 60px;
+  background: linear-gradient(to bottom, var(--text-muted), transparent);
+  animation: scroll-pulse 2s ease-in-out infinite;
+}
+@keyframes scroll-pulse {
+  0%,100%{opacity:0.4;transform:scaleY(1)} 50%{opacity:1;transform:scaleY(1.2)}
+}
+
+@media (max-width: 768px) {
+  .hero-cta-group {
+    gap: 24px;
+  }
+  .cv-3d-card {
+    width: 260px;
+  }
+}
